@@ -5,6 +5,7 @@ import logo from './assets/TSG App Logo.png'
 
 export const App = () => {
 	const [search, setSearch] = useState('')
+	const [searchText, setSearchText] = useState('')
 	const [songData, setSongData] = useState([])
 
 	const getSongData = async (search) => {
@@ -19,14 +20,19 @@ export const App = () => {
 		try {
 			const response = await fetch(requestUrl, options)
 			const result = await response.json()
+			console.log(result)
+
+			setSearchText(search)
 
 			const songInfo = result.tracks.items.map((info) => ({
 				title: info.data.name,
 				artist: info.data.artists.items[0].profile.name,
 				album: info.data.albumOfTrack.name,
 				artwork: info.data.albumOfTrack.coverArt.sources[0].url,
+				spotify: info.data.albumOfTrack.sharingInfo.shareUrl,
 			}))
 			setSongData(songInfo)
+			console.log(songData)
 		} catch (error) {
 			console.error(error)
 		}
@@ -38,82 +44,95 @@ export const App = () => {
 		setSearch('')
 	}
 
-	const btnStyle = {
-		color: 'red',
-		height: '50px',
-		width: '150px',
-		borderRadius: '50px',
-		backgroundColor: 'dodgerblue',
-		marginTop: '15px',
-		marginBottom: '15px',
-		fontFamily: 'Titan One',
-	}
-
 	return (
 		<Fragment>
-			<header className='w-100 bg-dark'>
+			<header className='w-100 bg-dark text-center p-5'>
 				<img
 					src={logo}
 					alt='TSG Logo'
-					style={{ width: '350px' }}
+					style={{ width: '20rem', marginBottom: '2rem' }}
 				/>
-				<p className='text-light p-2 header-sub' style={{fontSize: '24pt'}}>
-					If you know the words, we know the song!
-				</p>
-			</header>
-			<main>
 				<div
-					className='card col-9 m-auto text-center'
-					style={{ color: 'dodgerblue', fontFamily: 'Titan One' }}>
-					<h3
-						className='card-title text-center mt-2 mb-4 search-title'
-						style={{ color: 'dodgerblue', fontFamily: 'Titan One', fontSize: '30pt' }}>
-						Search The App
-					</h3>
-					<form>
+					className='card m-auto text-center p-3'
+					style={{
+						color: 'dodgerblue',
+						fontFamily: 'Titan One',
+						maxWidth: '1000px',
+					}}>
+					<form
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							gap: '1rem',
+							fontFamily: 'arial',
+						}}>
 						<input
+							className='form-control'
 							type='text'
 							placeholder='The song goes...'
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
 						/>
 						<button
+							className='btn btn-primary'
 							type='submit'
-							style={btnStyle}
 							onClick={newSearch}>
-							Submit
+							<span className='material-symbols-outlined'>search</span>
 						</button>
 					</form>
 				</div>
-
+			</header>
+			<main style={{ maxWidth: '1280px', margin: '1rem auto' }}>
 				<div className='col-9 vh-auto m-auto'>
-					<h2
-						className='text-center'
-						style={{ color: 'dodgerblue', fontFamily: 'Titan One' }}>
-						Results
-					</h2>
-					<hr />
+					{searchText && (
+						<Fragment>
+							<h3
+								className='text-center mt-3'
+								style={{ color: 'dodgerblue', fontFamily: 'Titan One' }}>
+								Results for...
+							</h3>
+							<div
+								style={{
+									background: 'yellow',
+									color: 'red',
+									fontSize: '1.5rem',
+									textAlign: 'center',
+									fontWeight: 'bold',
+								}}>
+								{searchText}
+							</div>
+							<hr />
+						</Fragment>
+					)}
 					{songData.length !== 0 && (
 						<div id='results'>
 							{songData.map((info, index) => (
 								<Fragment key={index}>
-									<div className='card'>
-										<div className='card-img'>
-											<img
-												src={info.artwork}
-												alt='album artwork'
-											/>
-										</div>
-										<div className='card-info'>
-											<div style={{ fontSize: '2rem' }}>
-												Title: {info.title}
+									<div
+										className='card'>
+										<img
+											className='card-img-top'
+											src={info.artwork}
+											alt='album artwork'
+										/>
+										<div className='card-body'>
+											<div
+												className='card-title'
+												style={{ textAlign: 'center', fontWeight: 'bold' }}>
+												{info.title} - {info.artist}
 											</div>
-											<div style={{ fontSize: '1.5rem' }}>
-												Artist: {info.artist}
+											<div
+												className='card-subtitle'
+												style={{
+													textAlign: 'center',
+													fontStyle: 'italic',
+												}}>
+												(from album{' '}
+												<span style={{ fontWeight: 'bold' }}>{info.album}</span>
+												)
 											</div>
-											<div style={{ fontSize: '1.25rem' }}>
-												Album: {info.album}
-											</div>
+											<div className='text-center'><a href={info.spotify} target='_blank' rel='noreferrer' className='btn btn-success btn-lg mt-3' style={{width: '75%'}}>Play on Spotify</a></div>
 										</div>
 									</div>
 								</Fragment>
