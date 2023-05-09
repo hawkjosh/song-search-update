@@ -1,0 +1,95 @@
+header {
+	background-color: hsla(210, 11%, 15%, 1);
+	padding: 2rem;
+	opacity: 0.8;
+
+	& .container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 3rem;
+		max-width: 62.5rem;
+		margin: auto;
+
+		@media (width < 42rem) {
+			flex-direction: column;
+			gap: 1.25rem;
+		}
+
+		& .logo {
+			width: clamp(5rem, 2.234rem + 11.348vw, 7rem);
+
+			@media (width >= 42rem) {
+				width: clamp(8rem, 3.579rem + 10.526vw, 12rem);
+			}
+		}
+
+		& .search-wrapper {
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: hsla(210, 11%, 15%, 1);
+			word-wrap: break-word;
+			background: $bg-main;
+			background-clip: border-box;
+			border: 0.0625rem solid hsla(0, 0%, 0%, 0.17);
+			border-radius: 0.375rem;
+			margin: auto;
+			text-align: center;
+			padding: 1rem;
+
+			@media (width < 42rem) {
+				padding: 0.5rem;
+				width: 90%;
+			}
+
+			& form {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 1rem;
+
+				& .search-input {
+					flex-basis: 90%;
+					display: block;
+					width: 100%;
+					padding: 0.375rem 0.75rem;
+					font-size: clamp(1rem, 0.781rem + 0.899vw, 1.5rem);
+					font-weight: 400;
+					line-height: 1.5;
+					color: hsla(210, 11%, 15%, 1);
+					background-color: hsla(0, 100%, 100%, 1);
+					background-clip: padding-box;
+					border: 0.0625rem solid hsla(0, 0%, 0%, 0.17);
+					appearance: none;
+					border-radius: 0.375rem;
+					transition: border-color 0.15s ease-in-out,
+						box-shadow 0.15s ease-in-out;
+					margin: 0;
+				}
+
+				& .search-btn {
+					flex-basis: 10%;
+					padding: 0.25rem 0.5rem;
+					line-height: 1.5;
+					border: 0.125rem solid hsla(216, 98%, 52%, 1);
+					border-radius: 0.375rem;
+					background-color: hsla(39, 100%, 50%, 1);
+					cursor: pointer;
+
+					&:hover {
+						background-color: hsla(216, 98%, 52%, 0.5);
+						border-color: hsla(39, 100%, 50%, 1);
+					}
+
+					& .search-btn-icon {
+						font-size: clamp(1.5rem, 1.062rem + 1.798vw, 2.5rem);
+						line-height: 1.25;
+					}
+				}
+			}
+		}
+	}
+}

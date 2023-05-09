@@ -1,38 +1,4 @@
-body {
-	background-color: lightblue;
-	opacity: 0.8;
-}
-
-input::placeholder {
-  color: gray;
-  font-family: arial;
-  font-style: italic;
-}
-
-#results {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-	gap: 1.25rem;
-	width: 100%;
-	margin: 1.25rem auto;
-}
-
-@media (min-width: 880px) {
-  .card-title {
-    font-size: clamp(1.5rem, 0.4rem + 2vw, 2rem);
-  }
-
-  .card-subtitle {
-    font-size: clamp(1rem, 0.45rem + 1vw, 1.25rem);
-  }
-}
-
-@media (max-width: 879px) {
-  .card-title {
-    font-size: clamp(1.5rem, 0.704rem + 3.265vw, 2.5rem);
-  }
-
-  .card-subtitle {
-    font-size: clamp(1rem, 0.602rem + 1.633vw, 1.5rem);
-  }
-}
+@import './styles/_variables.css';
+@import './styles/_base.css';
+@import './styles/_header.css';
+@import './styles/_main.css';
