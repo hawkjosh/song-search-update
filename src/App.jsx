@@ -1,8 +1,12 @@
-import { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 
 import { rapidApiUrl, rapidApiKey, rapidApiHost } from '../config.js'
 
 import { Logo } from './components/Logo.jsx'
+import { SongIcon } from './components/SongIcon.jsx'
+import { ArtistIcon } from './components/ArtistIcon.jsx'
+import { AlbumIcon } from './components/AlbumIcon.jsx'
+import { SpotifyIcon } from './components/SpotifyIcon.jsx'
 
 import './App.css'
 
@@ -71,14 +75,13 @@ export const App = () => {
 				</div>
 			</header>
 			<main>
-				<div className='container'>
+				<div className='results-container'>
 					{searchText && (
 						<Fragment>
-							<div className='results-label'>Showing results for:
-							</div>
-							<div className='text-wrapper'>
+							<div className='results-label'>Showing results for:</div>
+							<div className='results-wrapper'>
 								<div
-									className='text'
+									className='results-text'
 									title={searchText}>
 									"{searchText}"
 								</div>
@@ -86,38 +89,39 @@ export const App = () => {
 						</Fragment>
 					)}
 					{songData.length !== 0 && (
-						<div className='content-wrapper'>
+						<div className='cards-wrapper'>
 							{songData.map((info, index) => (
 								<Fragment key={index}>
 									<div className='card'>
 										<img
-											className='card-img'
+											className='album-img'
 											src={info.artwork}
 											alt='album artwork'
 										/>
 										<div className='card-body'>
-											<div className='card-title' title={`${info.title} - ${info.artist}`}>
-												{info.title} - {info.artist}
+											<div className='song-info-wrapper'>
+												<div className='song-info-box'>
+													<SongIcon className='song-info-icon' />
+													<div className='song-info'>{info.title}</div>
+												</div>
+												<div className='song-info-box'>
+													<ArtistIcon className='song-info-icon' />
+													<div className='song-info'>{info.artist}</div>
+												</div>
+												<div className='song-info-box'>
+													<AlbumIcon className='song-info-icon' />
+													<div className='song-info'>{info.album}</div>
+												</div>
 											</div>
-											<div className='card-subtitle' title={info.album}>
-												(from album{' '}
-												<span className='subtitle-focus'>{info.album}</span>)
-											</div>
-											<div className='card-btn-wrapper'>
-												<a
-													className='btn-link'
-													type='button'
-													href={info.spotify}
-													target='_blank'
-													rel='noreferrer'>
-													<div className='btn-text-wrapper'>
-														<span className='btn-icon'>🎵</span>
-														<span className='btn-text'>
-															Open in Spotify
-														</span>
-													</div>
-												</a>
-											</div>
+											<button
+												className='spotify-btn'
+												onClick={() =>
+													window.open(`${info.spotify}`, '_blank')
+												}>
+												{/* <span className='music-icon'>🎵</span> */}
+												<SpotifyIcon className='spotify-icon' />
+												<span className='spotify-text'>Open in Spotify</span>
+											</button>
 										</div>
 									</div>
 								</Fragment>
