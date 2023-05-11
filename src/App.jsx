@@ -15,6 +15,9 @@ export const App = () => {
 	const [searchText, setSearchText] = useState('')
 	const [songData, setSongData] = useState([])
 
+	const textRef = useRef('')
+	// const [isHovered, setIsHovered] = useState(false)
+
 	const getSongData = async (search) => {
 		const requestUrl = `${rapidApiUrl}?q=${search}&type=tracks&offset=0&limit=12`
 		const options = {
@@ -50,6 +53,52 @@ export const App = () => {
 		setSearch('')
 	}
 
+	// const textElement = textRef.current
+
+	// useEffect(() => {
+	// 	if (textElement) {
+	// 		textElement.addEventListener('mouseover', handleHoverStart)
+	// 		textElement.addEventListener('mouseleave', handleHoverStop)
+	// 	}
+
+	// 	return () => {
+	// 		if (textElement) {
+	// 			textElement.removeEventListener('mouseover', handleHoverStart)
+	// 			textElement.removeEventListener('mouseleave', handleHoverStop)
+	// 		}
+	// 	}
+	// }, [])
+
+	// const handleHoverStart = () => {
+	// 	if (textElement) {
+	// 		if (textElement.clientWidth - textElement.scrollWidth >= 0) {
+	// 			handleHoverStop()
+	// 		} else {
+	// 			const scrollDiff = textElement.clientWidth - textElement.scrollWidth
+
+	// 			const keyframes = `
+	// 				@keyframes left-scroll {
+	// 					0% { transform: translateX(0); }
+	// 					100% { transform: translateX(${scrollDiff}); }
+	// 				}
+	// 			`
+
+	// 			textElement.style.animationKeyframes = keyframes
+	// 			textElement.style.animation = 'left-scroll 7.5s linear 0.5s'
+	// 			textElement.style.overflow = 'visible'
+	// 			textElement.style.overflowX = 'auto'
+	// 			textElement.style.textOverflow = 'string'
+	// 			textElement.style.cursor = 'pointer'
+	// 		}
+	// 	}
+	// }
+
+	// const handleHoverStop = () => {
+	// 	textElement.style.animation = 'none'
+	// 	textElement.style.overflow = 'hidden'
+	// 	textElement.style.cursor = 'default'
+	// }
+
 	return (
 		<Fragment>
 			<header>
@@ -80,9 +129,7 @@ export const App = () => {
 						<Fragment>
 							<div className='results-label'>Showing results for:</div>
 							<div className='results-wrapper'>
-								<div
-									className='results-text'
-									title={searchText}>
+								<div className='results-text' ref={textRef}>
 									"{searchText}"
 								</div>
 							</div>
@@ -100,17 +147,35 @@ export const App = () => {
 										/>
 										<div className='card-body'>
 											<div className='song-info-wrapper'>
-												<div className='song-info-box'>
-													<SongIcon className='song-info-icon' />
-													<div className='song-info'>{info.title}</div>
+												<div className='song-info-box title'>
+													<div className='icon-wrapper'>
+														<SongIcon className='song-info-icon title' />
+													</div>
+													<div className='text-wrapper'>
+														<div className='song-info-text title'>
+															{info.title}
+														</div>
+													</div>
 												</div>
-												<div className='song-info-box'>
-													<ArtistIcon className='song-info-icon' />
-													<div className='song-info'>{info.artist}</div>
+												<div className='song-info-box artist'>
+													<div className='icon-wrapper'>
+														<ArtistIcon className='song-info-icon artist' />
+													</div>
+													<div className='text-wrapper'>
+														<div className='song-info-text artist'>
+															{info.artist}
+														</div>
+													</div>
 												</div>
-												<div className='song-info-box'>
-													<AlbumIcon className='song-info-icon' />
-													<div className='song-info'>{info.album}</div>
+												<div className='song-info-box album'>
+													<div className='icon-wrapper'>
+														<AlbumIcon className='song-info-icon album' />
+													</div>
+													<div className='text-wrapper'>
+														<div className='song-info-text album'>
+															{info.album}
+														</div>
+													</div>
 												</div>
 											</div>
 											<button
