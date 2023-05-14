@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 
 import { rapidApiUrl, rapidApiKey, rapidApiHost } from '../config.js'
 
@@ -15,9 +15,6 @@ export const App = () => {
 	const [searchText, setSearchText] = useState('')
 	const [songData, setSongData] = useState([])
 
-	const textRef = useRef('')
-	// const [isHovered, setIsHovered] = useState(false)
-
 	const getSongData = async (search) => {
 		const requestUrl = `${rapidApiUrl}?q=${search}&type=tracks&offset=0&limit=12`
 		const options = {
@@ -30,7 +27,6 @@ export const App = () => {
 		try {
 			const response = await fetch(requestUrl, options)
 			const result = await response.json()
-			console.log(result)
 
 			setSearchText(search)
 
@@ -53,51 +49,20 @@ export const App = () => {
 		setSearch('')
 	}
 
-	// const textElement = textRef.current
+	const scrollStart = (e) => {
+		const scrollAmount = e.target.scrollLeftMax
 
-	// useEffect(() => {
-	// 	if (textElement) {
-	// 		textElement.addEventListener('mouseover', handleHoverStart)
-	// 		textElement.addEventListener('mouseleave', handleHoverStop)
-	// 	}
+		if (e.target.clientWidth < e.target.scrollWidth) {
+			e.target.classList.add('scroll')
+			e.target.style.setProperty('--scroll-amount', `${scrollAmount}px`)
+		} else {
+			e.target.classList.remove('scroll')
+		}
+	}
 
-	// 	return () => {
-	// 		if (textElement) {
-	// 			textElement.removeEventListener('mouseover', handleHoverStart)
-	// 			textElement.removeEventListener('mouseleave', handleHoverStop)
-	// 		}
-	// 	}
-	// }, [])
-
-	// const handleHoverStart = () => {
-	// 	if (textElement) {
-	// 		if (textElement.clientWidth - textElement.scrollWidth >= 0) {
-	// 			handleHoverStop()
-	// 		} else {
-	// 			const scrollDiff = textElement.clientWidth - textElement.scrollWidth
-
-	// 			const keyframes = `
-	// 				@keyframes left-scroll {
-	// 					0% { transform: translateX(0); }
-	// 					100% { transform: translateX(${scrollDiff}); }
-	// 				}
-	// 			`
-
-	// 			textElement.style.animationKeyframes = keyframes
-	// 			textElement.style.animation = 'left-scroll 7.5s linear 0.5s'
-	// 			textElement.style.overflow = 'visible'
-	// 			textElement.style.overflowX = 'auto'
-	// 			textElement.style.textOverflow = 'string'
-	// 			textElement.style.cursor = 'pointer'
-	// 		}
-	// 	}
-	// }
-
-	// const handleHoverStop = () => {
-	// 	textElement.style.animation = 'none'
-	// 	textElement.style.overflow = 'hidden'
-	// 	textElement.style.cursor = 'default'
-	// }
+	const scrollEnd = (e) => {
+		e.target.classList.remove('scroll')
+	}
 
 	return (
 		<Fragment>
@@ -129,7 +94,10 @@ export const App = () => {
 						<Fragment>
 							<div className='results-label'>Showing results for:</div>
 							<div className='results-wrapper'>
-								<div className='results-text' ref={textRef}>
+								<div
+									className='results-text hover'
+									onMouseEnter={scrollStart}
+									onMouseLeave={scrollEnd}>
 									"{searchText}"
 								</div>
 							</div>
@@ -152,7 +120,10 @@ export const App = () => {
 														<SongIcon className='song-info-icon title' />
 													</div>
 													<div className='text-wrapper'>
-														<div className='song-info-text title'>
+														<div
+															className='song-info-title'
+															onMouseEnter={scrollStart}
+															onMouseLeave={scrollEnd}>
 															{info.title}
 														</div>
 													</div>
@@ -162,7 +133,10 @@ export const App = () => {
 														<ArtistIcon className='song-info-icon artist' />
 													</div>
 													<div className='text-wrapper'>
-														<div className='song-info-text artist'>
+														<div
+															className='song-info-artist'
+															onMouseEnter={scrollStart}
+															onMouseLeave={scrollEnd}>
 															{info.artist}
 														</div>
 													</div>
@@ -172,7 +146,10 @@ export const App = () => {
 														<AlbumIcon className='song-info-icon album' />
 													</div>
 													<div className='text-wrapper'>
-														<div className='song-info-text album'>
+														<div
+															className='song-info-album'
+															onMouseEnter={scrollStart}
+															onMouseLeave={scrollEnd}>
 															{info.album}
 														</div>
 													</div>

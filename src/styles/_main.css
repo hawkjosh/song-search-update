@@ -1,9 +1,13 @@
+:root {
+	--scroll-amount: 0;
+}
+
 @keyframes scroll {
 	0% {
 		transform: translateX(0);
 	}
 	100% {
-		transform: translateX(-100%);
+		transform: translateX(calc(-1 * (var(--scroll-amount))));
 	}
 }
 
@@ -33,21 +37,23 @@ main {
 			border-top: 0.125rem solid hsla(39, 100%, 50%, 1);
 			border-bottom: 0.125rem solid hsla(39, 100%, 50%, 1);
 			overflow-x: hidden;
+			white-space: nowrap;
+			cursor: default;
 
 			& .results-text {
-				padding: 0.5rem 1.5rem;
-				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				text-align: center;
-				cursor: pointer;
+				padding: 0.5rem 1.5rem;
 
-				&:hover {
+				&.scroll {
 					overflow: visible;
-					word-wrap: break-word;
-					animation: scroll 7.5s linear 0.5s;
-					animation-fill-mode: forwards;
 					cursor: pointer;
+
+					&:hover {
+						animation: scroll 3s linear 0.5s;
+						animation-fill-mode: forwards;
+					}
 				}
 			}
 		}
@@ -144,35 +150,61 @@ main {
 						}
 
 						& .text-wrapper {
+							width: 100%;
 							overflow-x: hidden;
+							white-space: nowrap;
+							cursor: default;
 
-							& .song-info-text {
-								white-space: nowrap;
+							& .song-info-title {
+								font-size: 1.375rem;
+								color: yellow;
 								overflow: hidden;
 								text-overflow: ellipsis;
-								cursor: pointer;
 
-								&.title {
-									font-size: 1.375rem;
-									color: yellow;
-								}
-								&.artist {
-									font-size: 1.25rem;
-									color: dodgerblue;
-									padding-left: 0.125rem;
-								}
-								&.album {
-									font-size: 1.125rem;
-									color: orangered;
-									padding-left: 0.25rem;
-								}
-
-								&:hover {
+								&.scroll {
 									overflow: visible;
-									word-wrap: break-word;
-									animation: scroll 7.5s linear 0.5s;
-									animation-fill-mode: forwards;
 									cursor: pointer;
+
+									&:hover {
+										animation: scroll 3s linear 0.5s;
+										animation-fill-mode: forwards;
+									}
+								}
+							}
+
+							& .song-info-artist {
+								font-size: 1.25rem;
+								color: dodgerblue;
+								padding-left: 0.125rem;
+								overflow: hidden;
+								text-overflow: ellipsis;
+
+								&.scroll {
+									overflow: visible;
+									cursor: pointer;
+
+									&:hover {
+										animation: scroll 3s linear 0.5s;
+										animation-fill-mode: forwards;
+									}
+								}
+							}
+
+							& .song-info-album {
+								font-size: 1.125rem;
+								color: orangered;
+								padding-left: 0.25rem;
+								overflow: hidden;
+								text-overflow: ellipsis;
+
+								&.scroll {
+									overflow: visible;
+									cursor: pointer;
+
+									&:hover {
+										animation: scroll 3s linear 0.5s;
+										animation-fill-mode: forwards;
+									}
 								}
 							}
 						}
