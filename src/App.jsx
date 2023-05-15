@@ -50,7 +50,10 @@ export const App = () => {
 	}
 
 	const scrollStart = (e) => {
-		const scrollAmount = e.target.scrollLeftMax
+		console.log('scrollStart function triggered')
+		// const scrollAmount = e.target.scrollLeftMax
+		const scrollAmount = e.target.scrollWidth - e.target.clientWidth
+		console.log(scrollAmount)
 
 		if (e.target.clientWidth < e.target.scrollWidth) {
 			e.target.classList.add('scroll')
